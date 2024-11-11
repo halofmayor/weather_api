@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meteorologia Semanal</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      max-width: 1920px;
+      position: relative;
+    }
+ 
+    .box {
+      width: 300px;
+      background-color: #4c5eaf;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.2em;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: transform 0.2s ease;
+      padding: 10px;
+    }
+
+    .box:hover {
+      transform: scale(1.05);
+    }
+
+    .info-footer {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #fff;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      font-size: 0.9em;
+      color: #333;
+    }
+
+    .info-footer img {
+      width: 200px;
+      height: 60px;
+      margin-left: 10px;
+      border-radius: 50%;
+    }
+
+    .boximg {
+      display: block;
+      width: 100px;
+      height: 100px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="box" id="dia1">
+      <span>Dia dd/mm/aa</span>
+      <img class="boximg" src="images/w_ic_d_01anim.svg" alt="sunnyDay">
+      <span>Probabilidade de precipitação: </span>
+      <span>Temperatura mínima: </span>
+      <span>Temperatura máxima: </span>
+    </div>
+    <div class="box" id="dia2">
+      <span>Dia dd/mm/aa</span>
+      <img class="boximg" src="images/w_ic_d_01anim.svg" alt="sunnyDay">
+      <span>Probabilidade de precipitação: </span>
+      <span>Temperatura mínima: </span>
+      <span>Temperatura máxima: </span>
+    </div>
+    <div class="box" id="dia3">
+      <span>Dia dd/mm/aa</span>
+      <img class="boximg" src="images/w_ic_d_01anim.svg" alt="sunnyDay">
+      <span>Probabilidade de precipitação: </span>
+      <span>Temperatura mínima: </span>
+      <span>Temperatura máxima: </span>
+    </div>
+    <div class="box" id="dia4">
+      <span>Dia dd/mm/aa</span>
+      <img class="boximg" src="images/w_ic_d_01anim.svg" alt="sunnyDay">
+      <span>Probabilidade de precipitação: </span>
+      <span>Temperatura mínima: </span>
+      <span>Temperatura máxima: </span>
+    </div>
+    <div class="box" id="dia5">
+      <span>Dia dd/mm/aa</span>
+      <img class="boximg" src="images/w_ic_d_01anim.svg" alt="sunnyDay">
+      <span>Probabilidade de precipitação: </span>
+      <span>Temperatura mínima: </span>
+      <span>Temperatura máxima: </span>
+    </div>
+  </div>
+
+  <div class="info-footer">
+    <span id="updatedOn">Informações atualizadas pela última vez em: --<br>
+                         Todos os dados são fornecidos pelo IPMA.
+    </span>
+    <a href="https://www.ipma.pt/pt/index.html" target="_blank"><img src="images/logo ipma.svg" alt="Fonte de dados" id="dataImage"></a>
+  </div>
+
+  <script>
+    async function fetchData() {
+      const boxes = ['dia1', 'dia2', 'dia3', 'dia4', 'dia5'];
+      
+      const apiURL = 'https://localhost:8080/${globalLocalid}'; 
+
+      try {
+        const response = await fetch(apiURL);
+        const data = await response.json();
+        
+        // Popula os quadrados com informações da API (exemplo básico)
+        boxes.forEach((id, index) => {
+          document.getElementById(id).textContent = data[index]?.info || 'Sem dados';
+        });
+      } catch (error) {
+        console.error("Erro ao buscar dados da API:", error);
+      }
+    }
+
+    // Chame a função para buscar dados ao carregar a página
+    fetchData();
+  </script>
+</body>
+</html>
