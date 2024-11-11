@@ -1,7 +1,6 @@
 package com.meteorologia.ipma_weather_service.domain.controller;
 
 import com.meteorologia.ipma_weather_service.domain.DTOs.Weather;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.meteorologia.ipma_weather_service.domain.service.WeatherService;
