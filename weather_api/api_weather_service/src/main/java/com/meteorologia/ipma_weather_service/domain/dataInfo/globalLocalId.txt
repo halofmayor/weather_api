@@ -1,17 +1,18 @@
-Lisboa	1110600
-Porto	1111500
-Faro	1111900
-Coimbra	1110800
-Braga	1111200
-Aveiro	1110300
-Évora	1111600
-Beja	1111800
-Ponta Delgada	1112300
-Funchal	1112400
-Viana do Castelo	1111000
-Leiria	1110700
-Santarém	1111400
-Guarda	1111100
-Vila Real	1111300
-Castelo Branco	1110900
-Bragança	1112000
+Lisboa - 1110600
+Porto - 1131200
+Faro - 1080500
+Coimbra - 1060300
+Braga - 1100900
+Aveiro - 1050200
+Setúbal - 1131300
+Évora - 1121400
+Leiria - 1090600
+Viseu - 1070400
+Viana do Castelo - 1160900
+Beja - 1020500
+Castelo Branco - 1060200
+Guarda - 1010500
+Portalegre - 1120700
+Santarém - 1141600
+Vila Real - 1030300
+Bragança - 1040200
