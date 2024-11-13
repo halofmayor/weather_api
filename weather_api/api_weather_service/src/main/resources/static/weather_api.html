@@ -123,26 +123,48 @@
   </div>
 
   <script>
-    async function fetchData() {
-      const boxes = ['dia1', 'dia2', 'dia3', 'dia4', 'dia5'];
-      
-      const apiURL = 'https://localhost:8080/${globalLocalid}'; 
+    async function fetchWeatherData() {
+  const boxes = ['dia1', 'dia2', 'dia3', 'dia4', 'dia5'];
+  const apiURL = 'http://localhost:8080/weather/1110600'; // Use HTTP se HTTPS estiver causando erro em ambiente local
 
-      try {
-        const response = await fetch(apiURL);
-        const data = await response.json();
-        
-        // Popula os quadrados com informações da API (exemplo básico)
-        boxes.forEach((id, index) => {
-          document.getElementById(id).textContent = data[index]?.info || 'Sem dados';
-        });
-      } catch (error) {
-        console.error("Erro ao buscar dados da API:", error);
-      }
+  try {
+    const response = await fetch(apiURL, {
+      method: 'POST', // Método POST
+      headers: {
+        'Content-Type': 'application/json' // Ajuste o Content-Type conforme necessário
+      },
+      body: JSON.stringify({ /* qualquer dado necessário para a requisição */ })
+    });
+
+    if (!response.ok) {
+      throw new Error(`Erro na requisição: ${response.status}`);
     }
 
-    // Chame a função para buscar dados ao carregar a página
-    fetchData();
+    const data = await response.json();
+    
+    // Popula as caixas com informações da API
+    boxes.forEach((id, index) => {
+      const boxElement = document.getElementById(id);
+      const forecastData = data.data[index];
+
+      // Atualizar os campos com dados específicos
+      boxElement.querySelector('span:first-of-type').textContent = `Dia ${new Date(forecastData.forecastDate).toLocaleDateString()}`;
+      boxElement.querySelector('.boximg').src = getWeatherIcon(forecastData.idWeatherType); // Função para mapear idWeatherType ao ícone correspondente
+      boxElement.querySelectorAll('span')[1].textContent = `Probabilidade de precipitação: ${forecastData.precipitaProb}%`;
+      boxElement.querySelectorAll('span')[2].textContent = `Temperatura mínima: ${forecastData.tMin}°C`;
+      boxElement.querySelectorAll('span')[3].textContent = `Temperatura máxima: ${forecastData.tMax}°C`;
+    });
+
+    // Atualiza a informação do rodapé com data/hora de atualização
+    document.getElementById('updatedOn').textContent = `Informações atualizadas pela última vez em: ${new Date(data.dataUpdate).toLocaleString()}`;
+
+  } catch (error) {
+    console.error("Erro ao buscar dados da API:", error);
+  }
+}
+
+// Chame a função para buscar dados ao carregar a página
+fetchWeatherData();
   </script>
 </body>
 </html>
