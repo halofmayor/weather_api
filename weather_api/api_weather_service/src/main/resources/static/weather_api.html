@@ -30,7 +30,7 @@
     }
  
     .box {
-      width: 300px;
+      width: 370px;
       background-color: #4c5eaf;
       color: #fff;
       display: flex;
@@ -129,33 +129,32 @@
 
   try {
     const response = await fetch(apiURL, {
-      method: 'POST', // Método POST
+      method: 'POST', // POST METHOD
       headers: {
         'Content-Type': 'application/json' // Ajuste o Content-Type conforme necessário
       },
-      body: JSON.stringify({ /* qualquer dado necessário para a requisição */ })
+      body: JSON.stringify({})
     });
 
     if (!response.ok) {
-      throw new Error(`Erro na requisição: ${response.status}`);
+      throw new Error(`Requision error: ${response.status}`);
     }
 
     const data = await response.json();
     
-    // Popula as caixas com informações da API
+    // Populates the boxes
     boxes.forEach((id, index) => {
       const boxElement = document.getElementById(id);
       const forecastData = data.data[index];
 
-      // Atualizar os campos com dados específicos
+      // Updates the box
       boxElement.querySelector('span:first-of-type').textContent = `Dia ${new Date(forecastData.forecastDate).toLocaleDateString()}`;
-      boxElement.querySelector('.boximg').src = getWeatherIcon(forecastData.idWeatherType); // Função para mapear idWeatherType ao ícone correspondente
       boxElement.querySelectorAll('span')[1].textContent = `Probabilidade de precipitação: ${forecastData.precipitaProb}%`;
       boxElement.querySelectorAll('span')[2].textContent = `Temperatura mínima: ${forecastData.tMin}°C`;
       boxElement.querySelectorAll('span')[3].textContent = `Temperatura máxima: ${forecastData.tMax}°C`;
     });
 
-    // Atualiza a informação do rodapé com data/hora de atualização
+    // Updates the footer
     document.getElementById('updatedOn').textContent = `Informações atualizadas pela última vez em: ${new Date(data.dataUpdate).toLocaleString()}`;
 
   } catch (error) {
@@ -163,7 +162,7 @@
   }
 }
 
-// Chame a função para buscar dados ao carregar a página
+// Calls the function
 fetchWeatherData();
   </script>
 </body>
